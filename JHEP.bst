@@ -1,4 +1,4 @@
-% JHEP bibliography style ver. 2.1
+% JHEP bibliography style ver. 2.2
 %
 % The bibtex output produced by inSPIRE, while far from perfect, is pretty
 % suitable for use with this style. Indeed, this style was designed with
@@ -286,9 +286,9 @@ FUNCTION {format.eprint}
 { eprint empty$
      { ""}
      { archive empty$
-          {"\href{http://arxiv.org/abs/" eprint * "}" *
+          {"\href{https://arxiv.org/abs/" eprint * "}" *
              "{{\tt " * eprint * "}}" *}
-          {"\href{http://arxiv.org/abs/" archive *  "/" * eprint * "}" *
+          {"\href{https://arxiv.org/abs/" archive *  "/" * eprint * "}" *
              "{{\tt " * archive * "/" * eprint * "}}" *}
        if$
      }
