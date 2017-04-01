@@ -1,4 +1,4 @@
-% JHEP bibliography style ver. 2.2
+% JHEP bibliography style ver. 2.3
 %
 % The bibtex output produced by inSPIRE, while far from perfect, is pretty
 % suitable for use with this style. Indeed, this style was designed with
@@ -287,9 +287,9 @@ FUNCTION {format.eprint}
      { ""}
      { archive empty$
           {"\href{https://arxiv.org/abs/" eprint * "}" *
-             "{{\tt " * eprint * "}}" *}
+             "{{\ttfamily " * eprint * "}}" *}
           {"\href{https://arxiv.org/abs/" archive *  "/" * eprint * "}" *
-             "{{\tt " * archive * "/" * eprint * "}}" *}
+             "{{\ttfamily " * archive * "/" * eprint * "}}" *}
        if$
      }
      if$
@@ -514,7 +514,7 @@ FUNCTION {format.pages.nopp}
 FUNCTION {format.volume}
 { volume empty$
     { "" }
-    { "{\bf " volume * "}" * }
+    { "{\bfseries " volume * "}" * }
   if$
 }
 
@@ -1086,6 +1086,7 @@ FUNCTION {begin.bib}
     'skip$
     { preamble$ write$ newline$ }
   if$
+  newline$
   "\providecommand{\href}[2]{#2}"
   "\begingroup\raggedright\begin{thebibliography}{" * longest.label  *
   "}" * write$ newline$ }
