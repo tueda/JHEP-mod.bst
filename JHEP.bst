@@ -1,4 +1,4 @@
-% JHEP bibliography style ver. 2.3
+% JHEP bibliography style ver. 2.6
 %
 % The bibtex output produced by inSPIRE, while far from perfect, is pretty
 % suitable for use with this style. Indeed, this style was designed with
@@ -53,6 +53,7 @@ ENTRY
     eprint
     report
     collaboration
+    url
   }
   {}
   { label }
@@ -224,15 +225,23 @@ FUNCTION {emphasize}
 FUNCTION {format.doi}
 { doi empty$
   { ""  }
-  {"\href{http://dx.doi.org/" doi * "}" * }
+  {"\href{https://doi.org/" doi * "}" * }
   if$
 }
 
 FUNCTION {formatfull.doi}
 { doi empty$
   { ""  }
-  {"\href{http://dx.doi.org/" doi *
+  {"\href{https://doi.org/" doi *
    "}{DOI}" * }
+  if$
+}
+
+FUNCTION {format.url}
+{
+  url empty$
+  {""}
+  {"\href{" url * "}{" * url * "}" *}
   if$
 }
 
@@ -860,11 +869,11 @@ FUNCTION {inproceedings}
       format.pages output
     }
   if$
-  new.block
   format.eprint output
-  new.block
-  % note output
-  formatfull.doi output
+  doi empty$
+    { format.url output }
+    { formatfull.doi output }
+  if$
   fin.entry
 }
 
@@ -950,8 +959,7 @@ FUNCTION {phdthesis}
 { output.bibitem
   format.authors "author" output.check
   format.btitle "title" output.check
-  new.block
-  "PhD thesis" format.thesis.type output.nonnull
+  "Ph.D. thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
   format.date "year" output.check
