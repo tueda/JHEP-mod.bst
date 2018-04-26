@@ -1,4 +1,4 @@
-% JHEP bibliography style ver. 2.6
+% JHEP bibliography style ver. 2.7
 %
 % The bibtex output produced by inSPIRE, while far from perfect, is pretty
 % suitable for use with this style. Indeed, this style was designed with
@@ -254,6 +254,10 @@ FUNCTION {format.names}
   s num.names$ 'numnames :=
   numnames 'namesleft :=
     { namesleft #0 > }
+    % the following removes space betwee author's initials
+    % but also removes "-" (as in composite names)
+    % so we do not use it
+    % { s nameptr "{f{.}. }{vv~}{ll}{, jj}" format.name$ 't :=
     { s nameptr "{f.~}{vv~}{ll}{, jj}" format.name$ 't :=
       nameptr #1 >
 	{ namesleft #1 >
@@ -408,6 +412,13 @@ FUNCTION {format.date.paren}
   if$
 }
 
+FUNCTION {format.date.paren.nomonth}
+{ year empty$
+  { "" }
+  {"(" year * ")" *}
+  if$
+}
+
 FUNCTION {format.collaboration}
 { collaboration empty$
     { "" }
@@ -508,17 +519,26 @@ FUNCTION {format.pages}
   if$
 }
 
+FUNCTION {first.page}
+{ 't :=
+  ""
+    {  t empty$ not t #1 #1 substring$ "-" = not and }
+    { t #1 #1 substring$ *
+      t #2 global.max$ substring$ 't :=
+    }
+  while$
+}
+
 FUNCTION {format.pages.nopp}
 { pages empty$
     { "" }
     { pages multi.page.check
-	{ pages n.dashify  }
+	{ pages first.page  }
 	{ pages }
       if$
     }
   if$
 }
-
 
 FUNCTION {format.volume}
 { volume empty$
@@ -683,43 +703,50 @@ FUNCTION {format.incoll.inproc.crossref}
 }
 
 FUNCTION {article}
-{ output.bibitem
+{
+  output.bibitem
   format.collaboration output
   format.authors "author" output.check
   format.title "title" output.check
   blank.sep
+
   crossref missing$
-  { journal missing$
-    { format.eprint output }
-    { journal empty$ { format.eprint output } {
-      format.doi * "{" * journal emphasize before.all 'output.state := "journal" output.check
-      % added \href{doi} and { before journal
-      % Slv
-      blank.sep
-      format.volume output
-      blank.sep
-      format.date.paren "year" output.check
-      %month empty$ { format.number output }
-      %  		  'skip$ if$
-      blank.sep
-      format.pages.nopp "}" * output }
-      %% closed parenthesis for href argument
+    {
+      journal missing$
+        { format.eprint output }
+        { journal empty$
+            { format.eprint output }
+            { format.doi * "{" * journal emphasize before.all 'output.state := "journal" output.check
+              blank.sep
+              format.volume output
+              blank.sep
+              format.date.paren.nomonth "year" output.check
+              blank.sep
+              format.pages.nopp "}" * output
+              blank.sep
+            }
+          if$
+        }
       if$
-      }
-    if$
-    report missing$
-            { journal empty$ {} { format.eprint.paren output} if$ }
-            {blank.sep format.report output format.eprint.paren output}
-            if$
+
+      report missing$
+        { journal empty$
+            {}
+            { format.eprint.paren output}
+          if$
+        }
+        { blank.sep format.report output format.eprint.paren output}
+      if$
     }
-    { format.article.crossref output.nonnull
-      format.pages output
+
+    {
+      format.article.crossref output.nonnull
+      format.pages.nopp output
       format.eprint.paren output
     }
   if$
+
   new.sentence
-  % format.doi output
-  % note output
   fin.entry
 }
 
@@ -738,15 +765,12 @@ FUNCTION {book}
   format.btitle "title" output.check
   crossref missing$
     { format.bvolume output
-      new.block
       format.number.series output
       new.sentence
       publisher "publisher" output.check
       address output
     }
-    { new.block
-      format.book.crossref output.nonnull
-    }
+    { format.book.crossref output.nonnull }
   if$
   format.edition output
   format.date "year" output.check
@@ -754,6 +778,7 @@ FUNCTION {book}
     {}
     { format.doi "{" * doi * "}" * "DOI" output.check }
   if$
+  format.eprint.paren output
   fin.entry
 }
 
