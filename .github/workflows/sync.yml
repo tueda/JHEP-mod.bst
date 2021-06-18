@@ -1,0 +1,30 @@
+name: Sync
+
+on:
+  schedule:
+    - cron: 0 0 * * * # daily
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          ref: upstream
+
+      - name: Fetch from the upstream
+        run: curl -O https://jhep.sissa.it/jhep/help/JHEP/TeXclass/DOCS/JHEP.bst
+
+      - name: Get the JHEP.bst version
+        id: jhep-bst-version
+        run: echo "::set-output name=value::$(grep ver JHEP.bst | head -1 | sed 's/^.*ver. *//')"
+
+      - name: Push if any changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "JHEP.bst ver. ${{ steps.jhep-bst-version.outputs.value }}"
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
