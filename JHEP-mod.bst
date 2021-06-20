@@ -62,6 +62,8 @@ ENTRY
     year
     archive
     eprint
+    archiveprefix
+    primaryClass
     report
     collaboration
     url
@@ -340,12 +342,25 @@ FUNCTION {format.authors}
 FUNCTION {format.eprint}
 { eprint empty$
      { ""}
-     { archive empty$
-          {"\href{https://arxiv.org/abs/" eprint * "}" *
-             "{{\ttfamily " * eprint * "}}" *}
-          {"\href{https://arxiv.org/abs/" archive *  "/" * eprint * "}" *
-             "{{\ttfamily " * archive * "/" * eprint * "}}" *}
-       if$
+     {
+        % INSPIRE-HEP assigns preprint information in BibTeX entries as follows.
+        % Up to March 2007:
+        %   eprint        = {hep-ph/YYMMNNN},
+        %   archiveprefix = {arXiv},
+        % Since April 2007:
+        %   eprint        = {YYMM.NNNN(N)},
+        %   archiveprefix = {arXiv},
+        %   primaryclass  = {hep-ph},
+        primaryclass empty$
+          {
+            "\href{https://arxiv.org/abs/" eprint * "}" *
+            "{{\ttfamily arXiv:" * eprint * "}}" *
+          }
+          {
+            "\href{https://arxiv.org/abs/" eprint * "}" *
+            "{{\ttfamily arXiv:" * eprint * "\,[" * primaryClass * "]" * "}}" *
+          }
+        if$
      }
      if$
 }
