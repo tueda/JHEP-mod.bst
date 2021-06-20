@@ -1,3 +1,14 @@
+% This file (JHEP-mod.bst) contains some private modifications from
+% the original JHEP.bst. For this derived work (covered by LPPL 1.3c
+% or later), see:
+%
+%   https://github.com/tueda/JHEP-mod.bst
+%
+
+% For autoupdate:
+% latest-raw-url: https://raw.githubusercontent.com/tueda/JHEP-mod.bst/main/JHEP-mod.bst
+
+
 % JHEP bibliography style ver. 2.18
 %
 % The bibtex output produced by inSPIRE, while far from perfect, is pretty
