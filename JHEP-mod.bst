@@ -806,7 +806,6 @@ FUNCTION {article}
               format.date.paren.nomonth "year" output.check
               blank.sep
               format.pages.nopp "}" * output
-              blank.sep
             }
           if$
         }
@@ -815,17 +814,17 @@ FUNCTION {article}
       report missing$
         { journal empty$
             {}
-            { format.eprint.paren output}
+            { format.eprint output }
           if$
         }
-        { blank.sep format.report output format.eprint.paren output}
+        { blank.sep format.report output format.eprint output}
       if$
     }
 
     {
       format.article.crossref output.nonnull
       format.pages.nopp output
-      format.eprint.paren output
+      format.eprint output
     }
   if$
 
