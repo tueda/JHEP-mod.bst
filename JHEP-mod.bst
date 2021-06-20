@@ -66,6 +66,13 @@ ENTRY
     primaryClass
     report
     collaboration
+    erratum.prefix
+    erratum.journal
+    erratum.volume
+    erratum.year
+    erratum.number
+    erratum.pages
+    erratum.doi
     url
   }
   {}
@@ -774,6 +781,65 @@ FUNCTION {format.author.or.collaboration}
   if$
 }
 
+FUNCTION {format.erratum}
+{
+  erratum.pages missing$
+    'skip$
+    {
+      blank.sep
+      "["
+      erratum.prefix missing$
+        { "Erratum" }
+        { erratum.prefix }
+      if$ emphasize *
+      output
+      blank.sep
+      % cf. format.doi
+      erratum.doi empty$
+        { "" }
+        { "\href{https://doi.org/" erratum.doi * "}" * }
+      if$
+      % end: format.doi
+      "{" *
+      erratum.journal missing$
+        { "ibid." }
+        { erratum.journal }
+      if$ emphasize *
+      output
+      blank.sep
+      % cf. format.volume
+      erratum.volume empty$
+        { "" }
+        { "{\bfseries " erratum.volume * "}" * }
+      if$
+      % end: format.volume
+      output
+      blank.sep
+      % cf. format.date.paren.nomonth
+      erratum.year empty$
+        { "" }
+        { "(" erratum.year * ")" * }
+      if$
+      % end: format.date.paren.nomonth
+      output
+      blank.sep
+      % cf. format.pages.nopp
+      erratum.pages empty$
+        { "" }
+        {
+          erratum.pages multi.page.check
+            { erratum.pages first.page }
+            { erratum.pages }
+          if$
+        }
+      if$
+      % end: format.pages.nopp
+      "}]" *
+      output
+    }
+  if$
+}
+
 FUNCTION {article}
 {
   output.bibitem
@@ -810,7 +876,7 @@ FUNCTION {article}
           if$
         }
       if$
-
+      format.erratum
       report missing$
         { journal empty$
             {}
