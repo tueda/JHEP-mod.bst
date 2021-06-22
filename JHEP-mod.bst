@@ -1,6 +1,6 @@
-% This file (JHEP-mod.bst) contains some private modifications from
-% the original JHEP.bst. For this derived work (covered by LPPL 1.3c
-% or later), see:
+% This file (JHEP-mod.bst v21.06.0) contains some modifications
+% from the original JHEP.bst. For this derived work (covered by LPPL
+% 1.3c or later), see:
 %
 %   https://github.com/tueda/JHEP-mod.bst
 %
