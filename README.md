@@ -1,7 +1,7 @@
 JHEP-mod.bst
 ============
 
-[`JHEP-mod.bst`](https://raw.githubusercontent.com/tueda/JHEP-mod.bst/main/JHEP-mod.bst)
+[`JHEP-mod.bst`](https://raw.githubusercontent.com/tueda/JHEP-mod.bst/v21.06.0/JHEP-mod.bst)
 is a modified version of `JHEP.bst` of the JHEP journals
 (see the [JHEP site](https://jhep.sissa.it/jhep/help/JHEP_TeXclass.jsp) for the original version).
 
