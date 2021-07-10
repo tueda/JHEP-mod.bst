@@ -65,6 +65,7 @@ ENTRY
     archiveprefix
     primaryClass
     report
+    reportNumber
     collaboration
     erratum.prefix
     erratum.journal
@@ -380,7 +381,41 @@ FUNCTION {format.eprint.paren}
   if$
 }
 
+FUNCTION {format.eprint.or.reportNumber}
+{
+  eprint missing$
+    {
+      reportNumber missing$
+        { "" }
+        {
+          ""
+          url missing$
+            'skip$
+            { "\href{" url * "}{" * * }
+          if$
+          reportNumber *
+          url missing$
+            'skip$
+            { "}" * }
+          if$
+          year missing$
+            'skip$
+            { " (" year * ")" * * }
+          if$
+        }
+      if$
+    }
+    { format.eprint }
+  if$
+}
 
+FUNCTION {format.eprint.or.null}
+{
+  eprint missing$
+    { "" }
+    { format.eprint }
+  if$
+}
 
 FUNCTION {format.report}
 { report empty$
@@ -862,9 +897,9 @@ FUNCTION {article}
   crossref missing$
     {
       journal missing$
-        { format.eprint output }
+        { format.eprint.or.reportNumber output }
         { journal empty$
-            { format.eprint output }
+            { format.eprint.or.reportNumber output }
             { format.doi * "{" * journal emphasize before.all 'output.state := "journal" output.check
               blank.sep
               format.volume output
@@ -880,7 +915,7 @@ FUNCTION {article}
       report missing$
         { journal empty$
             {}
-            { format.eprint output }
+            { format.eprint.or.null output }
           if$
         }
         { blank.sep format.report output format.eprint output}
