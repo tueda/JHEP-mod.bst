@@ -1,4 +1,4 @@
-% This file (JHEP-mod.bst v21.06.0) contains some modifications
+% This file (JHEP-mod.bst v21.07.0-dev) contains some modifications
 % from the original JHEP.bst. For this derived work (covered by LPPL
 % 1.3c or later), see:
 %
@@ -872,11 +872,11 @@ FUNCTION {article}
               format.date.paren.nomonth "year" output.check
               blank.sep
               format.pages.nopp "}" * output
+              format.erratum
             }
           if$
         }
       if$
-      format.erratum
       report missing$
         { journal empty$
             {}
