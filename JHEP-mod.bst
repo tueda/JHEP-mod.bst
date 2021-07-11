@@ -1111,22 +1111,18 @@ FUNCTION {mastersthesis}
 
 FUNCTION {misc}
 { output.bibitem
-  format.collaboration output
-  format.authors output
-  title empty$
-    { howpublished new.sentence.checka }
-    { howpublished empty$ not
-      month empty$ year empty$ and
-      or
-	{ format.title.p output.nonnull }
-	{ format.title output.nonnull }
-      if$
+  format.author.or.collaboration
+  title missing$
+    'skip$
+    {
+      format.title output
       blank.sep
     }
   if$
-  howpublished output
-  format.date output
-  new.block
+  howpublished "howpublished" output.check
+  blank.sep
+  format.date.paren.nomonth output
+  % new.block
   % note output
   doi output
   fin.entry
