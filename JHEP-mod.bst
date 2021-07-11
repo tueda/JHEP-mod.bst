@@ -1,4 +1,4 @@
-% This file (JHEP-mod.bst v21.07.0-dev) contains some modifications
+% This file (JHEP-mod.bst v21.07.0) contains some modifications
 % from the original JHEP.bst. For this derived work (covered by LPPL
 % 1.3c or later), see:
 %
