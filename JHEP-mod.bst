@@ -1268,6 +1268,7 @@ FUNCTION {begin.bib}
   if$
   newline$
   "\providecommand{\href}[2]{#2}"
+  "\providecommand{\url}[1]{#1}" *
   "\begingroup\raggedright\begin{thebibliography}{" * longest.label  *
   "}" * write$ newline$ }
 
